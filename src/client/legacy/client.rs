@@ -1402,6 +1402,20 @@ impl Builder {
         self
     }
 
+    /// Sets the maximum size of received header frames.
+    ///
+    /// hyper's default is 16 KiB, which is smaller than what browsers accept
+    /// (Chrome allows 256 KiB); past it the stream is reset with PROTOCOL_ERROR.
+    ///
+    /// See the documentation of [`h2::client::Builder::max_header_list_size`] for more
+    /// details.
+    #[cfg(feature = "http2")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "http2")))]
+    pub fn http2_max_header_list_size(&mut self, max: u32) -> &mut Self {
+        self.h2_builder.max_header_list_size(max);
+        self
+    }
+
     /// Provide a timer to be used for h2
     ///
     /// See the documentation of [`h2::client::Builder::timer`] for more
